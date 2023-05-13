@@ -48,14 +48,14 @@
      • edit the branch as per your repository. By default is */master
      • Click apply and save.
      • Now the build the job and check if it success. It should be successful if done no mistake.(Refer to SS:img 14)
-  10. Check if Jenkins and Github are integrated or not :
+  ### Check if Jenkins and Github are integrated or not:
         • cd /var/lib/jenkins/workspace/nodejs-todo 
         • ls
         And you can see the files here now of git repository.
         
 ### Now we have to run the application
 
-Run these commands:
+### Run these commands:
     • sudo apt install nodejs
     • sudo apt install npm
     • sudo npm install
@@ -69,37 +69,38 @@ Run these commands:
 
  ### But it will stop when we do Ctrl+C.
  ### So we will use Docker to containerize it   
-  // Open EC2 terminal and follow these commands:
-  • sudo apt install docker.io
-  • docker build . -t node-app
-  • sudo usermod -a -G docker $USER
-  • docker run -d --name node-app -p 8000:8000 todo-node-app
+ 
+### Open EC2 terminal and follow these commands:
+    • sudo apt install docker.io
+    • docker build . -t node-app
+    • sudo usermod -a -G docker $USER
+    • docker run -d --name node-app -p 8000:8000 todo-node-app
 
 ### Now it will run with Docker
 
 ## Auto buildiing Docker File through jenkins
-  Steps:
-  • Go to jenkins job and open COnfigure
-  • Write build steps
-  • docker build . -t node-app
-  • docker run -d --name node-app -p 8000:8000 todo-node-app
-  • Apply and save.
-  • Go to EC2 terminal and use these commands before clicking on build now.
+ ### Steps:
+    • Go to jenkins job and open COnfigure
+    • Write build steps
+    • docker build . -t node-app
+    • docker run -d --name node-app -p 8000:8000 todo-node-app
+    • Apply and save.
+    • Go to EC2 terminal and use these commands before clicking on build now.
     • sudo chmod 777 /var/lib/jenkins/workspace/nodejs-todo
     • sudo usermod -a -G docker jenkins
     • sudo systemctl restart jenkins
-  // use below command if it gives error after building
+### use below command if it gives error after building
     • docker kill *image_name*
     • docker rm *image_name*
 
 ### It will successfully runn
 
-#### Using Continous Integration using webhooks
-   • Go to Github repository settings and go on webhooks. Enter the source as of jenkins i.e., 65.1.109.53:8080 and also don't forget to add github-webhook/ at the end. Overall write like http://65.1.109.53:8080/github-webhook/
-   • Before doing okay. Change the inbound of 8080 to Anywhere from MyIp so that github can access it.
-   • Now click Ok
-   • Now go to jenkins jobs and enable Github hook trigger for Gitscm polling under build triggers and save.
-   • Now try make changes in files on github code.
-   • Now it will successfully Build without clicking on build now.
-   ## Boomb, We did it ;)
+### Using Continous Integration using webhooks
+    • Go to Github repository settings and go on webhooks. Enter the source as of jenkins i.e., 65.1.109.53:8080 and also don't forget to add github-webhook/ at the end. Overall write like http://65.1.109.53:8080/github-webhook/
+    • Before doing okay. Change the inbound of 8080 to Anywhere from MyIp so that github can access it.
+    • Now click Ok
+    • Now go to jenkins jobs and enable Github hook trigger for Gitscm polling under build triggers and save.
+    • Now try make changes in files on github code.
+    • Now it will successfully Build without clicking on build now.
+  # Boom , We did it ;)
 
