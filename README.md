@@ -1,4 +1,4 @@
-## IN THIS PRJECT WE ARE GOING TO USE JENKINS CI/CD WITH GITHUB INTEGRATION AND AND DOCKER FOR CONTAINERISATION WITH JENKINS AND AWS
+## IN THIS PROJECT WE ARE GOING TO USE JENKINS CI/CD WITH GITHUB INTEGRATION AND AND DOCKER FOR CONTAINERIZATION WITH JENKINS AND AWS
 
 ### STEP 1: Setup environment
    1. Launch AWS EC2 instance 
@@ -30,10 +30,10 @@
         • Now copy the public IPv4 of instance and browse it as for e.g.: 65.1.109.53:8080 
         // This will open Jenkins Welcome Page. Now, get the password and use it from using this command:
 	    • sudo cat /var/lib/jenkins/secrets/initialAdminPassword
-   6. Complete the Jenkins Login proces.
+   6. Complete the Jenkins Login process.
    7. Now create a job. Give it a name and choose a freestyle and click OK
    // Note; you should make a git repository either your project or cloned one anything doesn't matter.
-   8. Write your Description and chhose Github project(becaouse we have to pull it from git) and provide the repository link.
+   8. Write your Description and choose Github project(because we have to pull it from git) and provide the repository link.
    9. Choose the git and provide the same link of repo now we have to add credentials
    ### Follow these steps before adding credentials:
      • Go to EC2 server terminal and write ssh-keygen
@@ -49,7 +49,7 @@
      • Click apply and save.
      • Now the build the job and check if it success. It should be successful if done no mistake.(Refer to SS:img 14)
   10. Check if Jenkins and Github are integrated or not :
-        • cd /var/lib/jenkins/workspace/Jenkins-chatbot 
+        • cd /var/lib/jenkins/workspace/nodejs-todo 
         • ls
         And you can see the files here now of git repository.
         
@@ -60,7 +60,7 @@ Run these commands:
     • sudo apt install npm
     • sudo npm install
     • node app.js
-    // Add 8000 to inbound commection:
+    // Add 8000 to inbound connection:
     Type: Custom TCP 
     port no:  8000
     Source: IPv4 ( because  other can access to this IP address)
@@ -83,7 +83,11 @@ Run these commands:
   • Write build steps
   • docker build . -t node-app
   • docker run -d --name node-app -p 8000:8000 todo-node-app
-  • Apply and save and build now
+  • Apply and save.
+  • Go to EC2 terminal and use these commands before clicking on build now.
+    • sudo chmod 777 /var/lib/jenkins/workspace/nodejs-todo
+    • sudo usermod -a -G docker jenkins
+    • sudo systemctl restart jenkins
   // use below command if it gives error after building
     • docker kill *image_name*
     • docker rm *image_name*
@@ -91,7 +95,7 @@ Run these commands:
 ### It will successfully runn
 
 #### Using Continous Integration using webhooks
-   • Go to Github repository settings and go on webhooks. Enter the source as of jenkins i.e., 65.1.109.53:8080 and also dont forget to add github-webhook/ at the end. Overall write like http://65.1.109.53:8080/github-webhook/
+   • Go to Github repository settings and go on webhooks. Enter the source as of jenkins i.e., 65.1.109.53:8080 and also don't forget to add github-webhook/ at the end. Overall write like http://65.1.109.53:8080/github-webhook/
    • Before doing okay. Change the inbound of 8080 to Anywhere from MyIp so that github can access it.
    • Now click Ok
    • Now go to jenkins jobs and enable Github hook trigger for Gitscm polling under build triggers and save.
